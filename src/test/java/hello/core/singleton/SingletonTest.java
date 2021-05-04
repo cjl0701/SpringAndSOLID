@@ -1,10 +1,7 @@
 package hello.core.singleton;
 
 import hello.core.AppConfig;
-import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
-import hello.core.member.MemberServiceImpl;
-import hello.core.member.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,5 +23,21 @@ public class SingletonTest {
 
         //memberService1 != memberService2
         Assertions.assertThat(memberService1).isNotSameAs(memberService2);
+    }
+
+    @Test
+    @DisplayName("싱글톤 패턴을 적용한 객체 사용")
+    void singletonServiceTest() {
+        SingletonService service1 = SingletonService.getInstance();
+        SingletonService service2 = SingletonService.getInstance();
+
+        //참조값이 같은 것을 확인
+        System.out.println("service1 = " + service1);
+        System.out.println("service2 = " + service2);
+
+        //memberService1 = memberService2
+        Assertions.assertThat(service1).isSameAs(service2);
+        //same: == 인스턴스 참조 값 비교
+        //equal: equals(오버라이드 가능) 메소드로 비교
     }
 }
