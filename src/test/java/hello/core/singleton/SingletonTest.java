@@ -5,8 +5,26 @@ import hello.core.member.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class SingletonTest {
+    @Test
+    @DisplayName("싱글톤 패턴을 적용한 객체 사용")
+    void singletonServiceTest() {
+        SingletonService service1 = SingletonService.getInstance();
+        SingletonService service2 = SingletonService.getInstance();
+
+        //참조값이 같은 것을 확인
+        System.out.println("service1 = " + service1);
+        System.out.println("service2 = " + service2);
+
+        //memberService1 == memberService2
+        Assertions.assertThat(service1).isSameAs(service2);
+        //same: == 인스턴스 참조 값 비교
+        //equal: equals(오버라이드 가능) 메소드로 비교
+    }
 
     @Test
     @DisplayName("스프링 없는 순수한 DI 컨테이너")
@@ -26,18 +44,18 @@ public class SingletonTest {
     }
 
     @Test
-    @DisplayName("싱글톤 패턴을 적용한 객체 사용")
-    void singletonServiceTest() {
-        SingletonService service1 = SingletonService.getInstance();
-        SingletonService service2 = SingletonService.getInstance();
+    @DisplayName("스프링 컨테이너와 싱글톤")
+    void springContainer() {
+        //AppConfig appConfig = new AppConfig();
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService1 = ac.getBean("memberService", MemberService.class);
+        MemberService memberService2 = ac.getBean("memberService", MemberService.class);
 
         //참조값이 같은 것을 확인
-        System.out.println("service1 = " + service1);
-        System.out.println("service2 = " + service2);
+        System.out.println("memberService1 = " + memberService1);
+        System.out.println("memberService2 = " + memberService2);
 
-        //memberService1 = memberService2
-        Assertions.assertThat(service1).isSameAs(service2);
-        //same: == 인스턴스 참조 값 비교
-        //equal: equals(오버라이드 가능) 메소드로 비교
+        //memberService1 == memberService2
+        Assertions.assertThat(memberService1).isSameAs(memberService2);
     }
 }
