@@ -12,7 +12,7 @@ public class MemberApp {
 //        AppConfig appConfig = new AppConfig();
 //        MemberService memberService = appConfig.memberService();
         //ApplicationContext: spring container
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AutoAppConfig.class);
         MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
 
         Member member = new Member(1L, "memberA", Grade.VIP);
