@@ -19,8 +19,10 @@ excludeFilters 를 이용해서 설정정보는 컴포넌트 스캔 대상에서
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)
 )
 public class AutoAppConfig {
+    /*
     @Bean("memoryMemberRepository")
     MemberRepository memberRepository(){
         return new MemoryMemberRepository();
     }
+    */
 }
