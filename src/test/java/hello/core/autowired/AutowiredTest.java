@@ -2,6 +2,7 @@ package hello.core.autowired;
 
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +15,8 @@ public class AutowiredTest {
     @Test
     void AutowiredOption() {
         //빈으로 등록되며 @Autowired가 있으면 의존관계를 주입해준다
-        new AnnotationConfigApplicationContext(TestBean.class);
+        ApplicationContext ac = new AnnotationConfigApplicationContext(TestBean2.class);
+        TestBean2 testBean2 = ac.getBean(TestBean2.class);
     }
 
     static class TestBean {
@@ -34,4 +36,17 @@ public class AutowiredTest {
         }
     }
 
+    static class TestBean2 {
+        private final Member bean;
+
+        //생성자 주입엔 @Autowired(required = false)를 쓸 수 없다
+        @Autowired
+        public TestBean2(@Autowired(required = false) Member bean) {
+            this.bean = bean;
+        }
+
+        public Member getBean() {
+            return bean;
+        }
+    }
 }
